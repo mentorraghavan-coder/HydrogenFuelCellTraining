@@ -9,9 +9,11 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: white;
             color: #333;
             line-height: 1.6;
+            padding: 0;
+            margin: 0;
         }
         
         .header {
@@ -19,9 +21,6 @@
             padding: 2rem;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
         
         .header h1 {
@@ -54,7 +53,7 @@
             gap: 0.5rem;
             flex-wrap: wrap;
             position: sticky;
-            top: 150px;
+            top: 0;
             z-index: 99;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
@@ -82,24 +81,10 @@
             background: linear-gradient(135deg, #f093fb, #f5576c);
         }
         
-        .container {
+        .content {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-        
-        .module {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin: 0 auto;
+            padding: 2rem;
         }
         
         h2 {
@@ -140,6 +125,19 @@
             border-left: 5px solid #f5576c;
         }
         
+        .canvas-box {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -166,19 +164,99 @@
             background: #f8f9fa;
         }
         
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 1.5rem 0;
+        }
+        
         ul, ol {
             margin-left: 2rem;
             margin-bottom: 1rem;
         }
         
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1000;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 8px;
+            padding: 0.7rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
         @media (max-width: 768px) {
-            .header h1 { font-size: 1.8rem; }
-            .module { padding: 1.5rem; }
-            .nav { top: 120px; }
+            .header h1 { font-size: 1.3rem; }
+            .header p { font-size: 0.85rem; }
+            .header { padding: 1rem; }
+            .content { padding: 1rem; }
+            
+            .hamburger { display: block; }
+            
+            .nav {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                height: 100vh;
+                width: 280px;
+                flex-direction: column;
+                background: rgba(255, 255, 255, 0.98);
+                padding: 5rem 1.5rem 1.5rem;
+                box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+                transition: left 0.3s ease;
+                overflow-y: auto;
+            }
+            
+            .nav.active {
+                left: 0;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                text-align: center;
+                margin: 0.3rem 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 { font-size: 1.1rem; }
+            .header p { font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
     <div class="header">
         <h1>⚡ Hydrogen Fuel Cell Propulsion Course</h1>
         <p>Complete Guide for Low-Speed Vehicles & Golf Carts</p>
@@ -187,7 +265,7 @@
         </div>
     </div>
 
-    <div class="nav">
+    <div class="nav" id="nav">
         <a href="index.html" class="nav-btn">Introduction</a>
         <a href="fundamentals.html" class="nav-btn">Fundamentals</a>
         <a href="pem-technology.html" class="nav-btn">PEM Technology</a>
@@ -199,10 +277,8 @@
         <a href="advanced-topics.html" class="nav-btn">Advanced Topics</a>
     </div>
 
-    <div class="container">
-        <!-- Module 4: Golf Cart Application -->
-        <div class="module">
-            <h2>⛳ Module 4: Golf Cart Application</h2>
+    <div class="content">
+        <h2>🚗 Module 4: Golf Cart Application</h2>
 
             <h3>Power Requirements</h3>
             <div class="info-box">
@@ -233,6 +309,7 @@
             </div>
 
             <h3>Performance Comparison</h3>
+            <div class="table-wrapper">
             <table>
                 <tr>
                     <th>Metric</th>
@@ -265,18 +342,25 @@
                     <td>10-15 years (stack)</td>
                 </tr>
             </table>
+            </div>
 
             <h3>Real-World Example</h3>
             <div class="info-box">
                 <p><cite index="4-1">A fuel cell hybrid golf cart was tested over a 100-km drive on a plain route with an average speed of about 18 km/h. The fuel cell system had an efficiency of over 30% at the power consumption required for vehicle cruise.</cite></p>
                 <p style="margin-top: 1rem;"><cite index="1-1">Hybrid fuel cell systems for light electric vehicles showed energy consumption of 0.11 kWh/km, with increases of up to 80% in maximum distance compared to battery-only systems.</cite></p>
             </div>
-        </div>
     </div>
 
     <script>
         // Update progress bar (56% for fifth module - 5/9)
         document.getElementById('progressBar').style.width = '56%';
+        
+        function toggleMenu() {
+            const nav = document.getElementById('nav');
+            const hamburger = document.querySelector('.hamburger');
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
     </script>
 </body>
 </html>
